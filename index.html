@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Herts Vapes</title>
+  <meta name="description" content="Herts Vapes — Fast. Reliable. Local." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --black:#020202;
+      --soft-black:#080808;
+      --card:#0d0d0f;
+      --card-border:rgba(255,255,255,.12);
+      --white:#ffffff;
+      --muted:rgba(255,255,255,.58);
+      --red:#e50914;
+      --red-soft:#ff1c26;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:#000;}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:#000;
+      color:var(--white);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      overflow-x:hidden;
+    }
+    button,a{-webkit-tap-highlight-color:transparent}
+
+    /* =========================
+       HERO — HERTS VAPES v0.4
+       ========================= */
+    .hero{
+      position:relative;
+      min-height:100svh;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:24px 18px calc(26px + env(safe-area-inset-bottom));
+      isolation:isolate;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 50% 62%, rgba(229,9,20,.16), transparent 26%),
+        radial-gradient(circle at 50% 54%, rgba(255,255,255,.055), transparent 25%),
+        linear-gradient(180deg,#000 0%,#030303 45%,#000 100%);
+    }
+
+    /* subtle rocky / floor-style base like the mockup, without needing an image */
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:-10%;right:-10%;bottom:-8%;
+      height:31%;
+      z-index:-2;
+      background:
+        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,.10), transparent 9%),
+        radial-gradient(ellipse at 8% 86%, rgba(255,255,255,.12), transparent 14%),
+        radial-gradient(ellipse at 92% 86%, rgba(255,255,255,.12), transparent 14%),
+        linear-gradient(180deg,transparent 0%, rgba(255,255,255,.025) 35%, #000 84%);
+      filter:blur(6px);
+      opacity:.65;
+      transform:skewY(-1deg);
+    }
+
+    .top-strip{
+      position:absolute;
+      top:max(14px,env(safe-area-inset-top));
+      left:50%;
+      transform:translateX(-50%);
+      width:min(92vw,680px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:11px 6px 13px;
+      border-bottom:1px solid rgba(255,255,255,.15);
+      color:rgba(255,255,255,.88);
+      font-size:clamp(8px,2.55vw,13px);
+      font-weight:800;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      z-index:5;
+      animation:fadeDown .7s ease both;
+    }
+    .top-strip span{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      white-space:nowrap;
+    }
+    .top-strip .accent{color:var(--red-soft)}
+    .top-strip .divider{
+      width:1px;
+      height:18px;
+      background:rgba(255,255,255,.48);
+      opacity:.7;
+    }
+    .strip-icon{width:18px;height:18px;display:block;color:currentColor;}
+
+    .smoke{
+      position:absolute;
+      z-index:-1;
+      pointer-events:none;
+      width:62vw;
+      max-width:560px;
+      height:56vh;
+      min-height:360px;
+      opacity:.55;
+      filter:blur(20px) saturate(1.05);
+      mix-blend-mode:screen;
+      animation:smokeFloat 13s ease-in-out infinite alternate;
+    }
+    .smoke-left{
+      left:-24vw;
+      bottom:4vh;
+      background:
+        radial-gradient(ellipse at 42% 52%, rgba(255,255,255,.30), transparent 13%),
+        radial-gradient(ellipse at 58% 34%, rgba(255,255,255,.20), transparent 18%),
+        radial-gradient(ellipse at 35% 72%, rgba(255,255,255,.18), transparent 20%),
+        radial-gradient(ellipse at 70% 76%, rgba(255,255,255,.10), transparent 23%);
+    }
+    .smoke-right{
+      right:-24vw;
+      bottom:4vh;
+      background:
+        radial-gradient(ellipse at 56% 52%, rgba(255,255,255,.26), transparent 13%),
+        radial-gradient(ellipse at 40% 36%, rgba(255,255,255,.20), transparent 18%),
+        radial-gradient(ellipse at 66% 72%, rgba(255,255,255,.17), transparent 21%),
+        radial-gradient(ellipse at 30% 78%, rgba(229,9,20,.18), transparent 24%);
+      animation-delay:-4s;
+    }
+    .red-smoke{
+      position:absolute;
+      right:-16vw;
+      top:33vh;
+      width:58vw;
+      max-width:480px;
+      height:38vh;
+      z-index:-1;
+      opacity:.33;
+      filter:blur(24px);
+      background:
+        radial-gradient(ellipse at 40% 45%, rgba(229,9,20,.54), transparent 18%),
+        radial-gradient(ellipse at 62% 70%, rgba(229,9,20,.32), transparent 24%),
+        radial-gradient(ellipse at 24% 72%, rgba(229,9,20,.24), transparent 22%);
+      mix-blend-mode:screen;
+      animation:redSmoke 11s ease-in-out infinite alternate;
+    }
+
+    .hero-content{
+      width:min(100%,820px);
+      margin:auto 0;
+      padding-top:72px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    .hero-logo{
+      width:min(78vw,720px);
+      max-height:42vh;
+      object-fit:contain;
+      display:block;
+      margin:0 auto;
+      filter:drop-shadow(0 0 18px rgba(255,255,255,.12)) drop-shadow(0 0 28px rgba(229,9,20,.20));
+      animation:logoReveal .85s cubic-bezier(.2,.9,.2,1) both .12s;
+    }
+
+    .shop-now{
+      margin-top:clamp(26px,4.3vh,54px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      min-width:min(260px,66vw);
+      height:58px;
+      border:1px solid rgba(255,28,38,.95);
+      border-radius:21px;
+      color:#fff;
+      background:linear-gradient(180deg,rgba(229,9,20,.27),rgba(80,0,4,.30));
+      box-shadow:0 0 24px rgba(229,9,20,.38), inset 0 0 0 1px rgba(255,255,255,.04);
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+      animation:fadeUp .75s ease both .42s;
+    }
+    .shop-now:active{transform:scale(.97);box-shadow:0 0 18px rgba(229,9,20,.28)}
+    .bag-icon{width:22px;height:22px;color:#fff}
+
+    .contact-panel{
+      width:min(92vw,760px);
+      margin-top:clamp(34px,6.5vh,72px);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      border:1px solid rgba(255,255,255,.75);
+      border-radius:18px;
+      overflow:hidden;
+      background:rgba(10,10,12,.44);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      opacity:.78;
+      box-shadow:0 0 30px rgba(229,9,20,.12);
+      animation:fadeUp .75s ease both .62s;
+      transition:opacity .35s ease, transform .35s ease, box-shadow .35s ease;
+    }
+    .hero.browsing .contact-panel,
+    body.scrolled .contact-panel{
+      opacity:1;
+      transform:translateY(-2px);
+      box-shadow:0 0 28px rgba(229,9,20,.23), 0 10px 30px rgba(0,0,0,.35);
+    }
+    .contact-panel a{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:14px;
+      text-decoration:none;
+      color:#fff;
+      text-transform:uppercase;
+    }
+    .contact-panel a:first-child{border-right:1px solid rgba(255,255,255,.34)}
+    .contact-panel strong{display:block;font-size:clamp(13px,3.9vw,22px);letter-spacing:.05em;font-weight:900;line-height:1.05;text-align:left;}
+    .contact-panel small{display:block;margin-top:5px;color:var(--muted);font-size:clamp(10px,3.1vw,16px);letter-spacing:.07em;font-weight:800;text-align:left;}
+    .contact-panel .app-icon{width:40px;height:40px;display:block;filter:drop-shadow(0 0 12px rgba(255,255,255,.12));}
+    .contact-panel .arrow{margin-left:auto;margin-right:15px;color:rgba(255,255,255,.7);font-size:34px;font-weight:300;line-height:1;}
+    .contact-text{min-width:0}
+
+    .scroll-cue{
+      margin-top:clamp(23px,4vh,42px);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:0;
+      color:var(--red-soft);
+      filter:drop-shadow(0 0 14px rgba(229,9,20,.65));
+      animation:fadeUp .75s ease both .82s;
+    }
+    .scroll-cue span{
+      width:28px;height:28px;
+      border-right:3px solid currentColor;
+      border-bottom:3px solid currentColor;
+      transform:rotate(45deg);
+      margin-top:-12px;
+      animation:arrowPulse 1.55s ease-in-out infinite;
+    }
+    .scroll-cue span:nth-child(2){animation-delay:.16s;opacity:.72}
+
+    /* Shop below hero — kept simple so the current site still works */
+    .shop{
+      position:relative;
+      padding:28px 16px 120px;
+      background:#000;
+    }
+    .shop-title{
+      margin:0 0 18px;
+      text-align:center;
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .accordion{display:grid;gap:12px;max-width:860px;margin:0 auto;}
+    .category{
+      border:1px solid var(--card-border);
+      border-radius:18px;
+      overflow:hidden;
+      background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+    }
+    .category-btn{
+      width:100%;
+      min-height:84px;
+      border:0;
+      background:transparent;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      gap:13px;
+      padding:14px 16px;
+      cursor:pointer;
+      text-align:left;
+    }
+    .category-icon{font-size:23px;color:var(--red)}
+    .category-title{font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:.03em;flex:1}
+    .category-products{display:flex;align-items:center;gap:6px;margin-left:auto;margin-right:6px;}
+    .category-products img{height:54px;max-width:76px;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.55));}
+    .plus{color:var(--red-soft);font-size:34px;font-weight:300;line-height:1;transition:transform .28s ease;}
+    .category.open .plus{transform:rotate(45deg)}
+    .category-content{max-height:0;overflow:hidden;transition:max-height .42s ease;border-top:1px solid transparent;}
+    .category.open .category-content{border-top-color:rgba(255,255,255,.09)}
+    .product{padding:18px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .product:last-child{border-bottom:0}
+    .product-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .product-name{font-weight:900;text-transform:uppercase;letter-spacing:.02em;font-size:16px}
+    .price{background:var(--red);color:#fff;border-radius:10px;padding:8px 11px;font-weight:900;white-space:nowrap;box-shadow:0 0 16px rgba(229,9,20,.24)}
+    .flavour-toggle{margin-top:13px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.2);color:#fff;border-radius:13px;width:100%;padding:13px 14px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;}
+    .flavours{max-height:0;overflow:hidden;transition:max-height .32s ease;margin-top:0;}
+    .flavours.open{margin-top:12px;}
+    .flavour-list{display:grid;gap:8px;padding:0;margin:0;list-style:none;color:rgba(255,255,255,.82);font-weight:700;}
+    .flavour-list li.out{opacity:.38;text-decoration:line-through;}
+
+    @keyframes logoReveal{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes fadeDown{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:.78;transform:translateY(0)}}
+    @keyframes smokeFloat{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(6vw,-4vh,0) scale(1.08)}}
+    @keyframes redSmoke{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-5vw,2vh,0) scale(1.1)}}
+    @keyframes arrowPulse{0%,100%{opacity:.25;transform:rotate(45deg) translate(0,0)}50%{opacity:1;transform:rotate(45deg) translate(5px,5px)}}
+
+    @media (max-width:430px){
+      .hero{padding-left:12px;padding-right:12px;}
+      .hero-logo{width:86vw;max-height:35vh;}
+      .contact-panel{width:96vw;border-radius:14px;}
+      .contact-panel a{min-height:68px;gap:9px;padding:0 7px;}
+      .contact-panel .app-icon{width:35px;height:35px;}
+      .contact-panel .arrow{font-size:28px;margin-right:6px;}
+      .top-strip{gap:8px;width:96vw;font-size:8px;letter-spacing:.04em;}
+      .strip-icon{width:15px;height:15px;}
+      .shop-now{height:52px;min-width:210px;font-size:15px;border-radius:16px;}
+    }
+
+    @media (min-width:760px){
+      .hero-logo{width:min(64vw,780px)}
+      .shop-now{height:64px;min-width:300px;font-size:20px;}
+      .contact-panel a{min-height:92px;}
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero" id="home">
+      <div class="top-strip" aria-label="Herts Vapes benefits">
+        <span class="accent">
+          <svg class="strip-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7h11v9H3V7Z" stroke="currentColor" stroke-width="2"/><path d="M14 10h3l4 4v2h-7v-6Z" stroke="currentColor" stroke-width="2"/><path d="M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" fill="currentColor"/></svg>
+          Fast Delivery
+        </span>
+        <i class="divider"></i>
+        <span>
+          <svg class="strip-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="2"/></svg>
+          Trusted Locally
+        </span>
+        <i class="divider"></i>
+        <span class="accent">
+          <svg class="strip-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z" fill="currentColor"/></svg>
+          Quality Vapes
+        </span>
+      </div>
+
+      <div class="smoke smoke-left"></div>
+      <div class="smoke smoke-right"></div>
+      <div class="red-smoke"></div>
+
+      <div class="hero-content">
+        <img class="hero-logo" src="herts-vapes-logo.png" alt="Herts Vapes — Fast. Reliable. Local." />
+
+        <button class="shop-now" type="button" data-scroll-target="#shop" aria-label="Scroll to shop">
+          <svg class="bag-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 8h12l1 13H5L6 8Z" stroke="currentColor" stroke-width="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Shop Now
+        </button>
+
+        <div class="contact-panel" id="contactPanel" aria-label="Order contact options">
+          <a id="whatsappLink" href="https://wa.me/447000000000?text=Hi%20Herts%20Vapes%2C%20I%27d%20like%20to%20place%20an%20order." target="_blank" rel="noopener">
+            <svg class="app-icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#25D366"/><path d="M45.6 37.8c-.7-.4-4.2-2.1-4.8-2.3-.7-.2-1.1-.4-1.6.4-.5.7-1.9 2.3-2.4 2.8-.4.5-.9.5-1.6.2-4.2-2.1-6.9-3.8-9.7-8.6-.7-1.3.7-1.2 2.1-4 .2-.5.1-1-.1-1.4-.2-.4-1.6-3.8-2.2-5.2-.6-1.4-1.2-1.2-1.6-1.2h-1.4c-.5 0-1.3.2-2 .9-.7.7-2.6 2.6-2.6 6.3s2.7 7.3 3.1 7.8c.4.5 5.3 8.1 12.9 11.4 4.8 2.1 6.7 2.2 9.1 1.9 1.4-.2 4.2-1.7 4.8-3.4.6-1.7.6-3.1.4-3.4-.2-.3-.6-.5-1.3-.8Z" fill="#fff"/></svg>
+            <span class="contact-text"><strong>WhatsApp</strong><small>Order now</small></span>
+            <span class="arrow">›</span>
+          </a>
+          <a id="snapchatLink" href="https://www.snapchat.com/add/chazza_manhood" target="_blank" rel="noopener">
+            <svg class="app-icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#FFFC00"/><path d="M32 13c-7.5 0-12.2 5.8-12.2 13.1 0 1.6.2 3 .3 4-1.1.6-2.5.4-3.7-.3-1-.5-2.1.2-2 1.3.2 1.8 1.8 3.2 4.8 3.8-.9 2.1-2.6 4.7-5.8 5.7-1.3.4-1.2 2.3.1 2.7 2.3.7 3.8 1.6 4.9 3.1.5.7 1.4 1 2.2.7 1.7-.6 3.1-.5 4.5.6 2 1.5 4.3 2.3 6.9 2.3s4.9-.8 6.9-2.3c1.4-1.1 2.8-1.2 4.5-.6.8.3 1.7 0 2.2-.7 1.1-1.5 2.6-2.4 4.9-3.1 1.3-.4 1.4-2.3.1-2.7-3.2-1-4.9-3.6-5.8-5.7 3-.6 4.6-2 4.8-3.8.1-1.1-1-1.8-2-1.3-1.2.7-2.6.9-3.7.3.1-1 .3-2.4.3-4C44.2 18.8 39.5 13 32 13Z" fill="#fff" stroke="#111" stroke-width="2"/></svg>
+            <span class="contact-text"><strong>Snapchat</strong><small>Order now</small></span>
+            <span class="arrow">›</span>
+          </a>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true"><span></span><span></span></div>
+      </div>
+    </section>
+
+    <section class="shop" id="shop" aria-label="Herts Vapes menu">
+      <h2 class="shop-title">Menu</h2>
+      <div class="accordion" id="menuAccordion"></div>
+    </section>
+  </main>
+
+  <script>
+    const CONTACTS = {
+      whatsappNumber: "447000000000",
+      whatsappMessage: "Hi Herts Vapes, I'd like to place an order.",
+      snapchatUsername: "chazza_manhood"
+    };
+
+    const menuData = [
+      {
+        title:"Special Deals", icon:"⭐", headerImages:["lost-mary.png","elux-salt-blue.png","pablo.png"],
+        products:[
+          {name:"Vaporesso Body Kit + 4 Liquids", price:"£30", flavours:[]},
+          {name:"2 Pods + 6 Liquids", price:"£20", flavours:[]},
+          {name:"2 × 25Ks", price:"£25", flavours:[]},
+          {name:"3 × 3.5Ks", price:"£10", flavours:[]},
+          {name:"2 Lost Marys + 1 25K", price:"£30", flavours:[]}
+        ]
+      },
+      {
+        title:"Disposable Vapes", icon:"🔥", headerImages:["lost-mary.png","hayati25k.png"],
+        products:[
+          {name:"Lost Mary BM6000", price:"£10", flavours:["Summer Grape","Blue Razz Lemonade","Pineapple Ice","Cherry Cola","Cherry Ice","Strawberry Raspberry Cherry Ice","Banana Ice","Triple Mango","Blueberry Sour Raspberry","Double Apple","Blueberry Cherry Cranberry","Miami Mint","Orange Bru"]},
+          {name:"Hayati Pro Ultra 25K", price:"£15", flavours:["Strawberry Cranberry Cherry / Strawberry Raspberry Ice","Blue Razz Cherry / Blue Razz Gummy Bear","Blueberry Cotton Candy / Raspberry Cotton Candy","Strawberry Cranberry Cherry / Cherry Ice","Kiwi Banana / Strawberry Banana"]},
+          {name:"Elux Legend 3500", price:"£5", flavours:["Cherry Ice","Fizzy Cherry","Cherry Sours","Pineapple Ice","Watermelon Cherry Raspberry Ice"]},
+          {name:"Enjoy Ultra 9K", price:"£10", flavours:["Berry Apple Peach","Apple Watermelon Strawberry"]},
+          {name:"Hayati Pro Max 6000", price:"£10", flavours:["Fizzy Cherry"]},
+          {name:"Pixl 8000", price:"£10", flavours:["Black Cherry"]}
+        ]
+      },
+      {
+        title:"Pod Kits", icon:"💨", headerImages:["vaporesso-xros.png"],
+        products:[{name:"Vaporesso XROS Pro 2.0 Body", price:"£25", flavours:["Glittering Black","Glittering Silver","Gem Green"]}]
+      },
+      {
+        title:"Replacement Pods", icon:"🟦", headerImages:["xros-pods.png"],
+        products:[{name:"Vaporesso Corex XROS Pods 0.6Ω", price:"1 - £5 / Pack of 4 - £15", flavours:[]}]
+      },
+      {
+        title:"Nic Salts", icon:"🧪", headerImages:["elux-salt-blue.png","elux-salt-purple.png"],
+        products:[{name:"Elux Legend Nic Salts 20mg", price:"2 - £5 / 4 - £10", flavours:["Mr Blue","Blueberry Cranberry Cherry","Blue Razz Gummy","Blackberry Ice","Banana Ice","Gummy Bear","Fizzy Cherry","Watermelon Ice","Blueberry Sour Raspberry","Cherry Ice","Blue Razz Cherry","Cherry Sour Raspberry","Grape","Lemon Lime","Strawberry Raspberry Cherry","Cola","Juicy Peach","Pineapple Ice","Hubbla Bubbla","Lemonade","Raspberry Peach","Triple Mango","Raspberry Watermelon","Black Cherry","Triple Melon"]}]
+      },
+      {
+        title:"Nicotine Pouches", icon:"⚪", headerImages:["velo.png","pablo.png"],
+        products:[
+          {name:"VELO Minty Lemon 10mg", price:"£5", flavours:[]},
+          {name:"Pablo Frosted Mint 50mg", price:"£5", flavours:[]},
+          {name:"Pack of 5", price:"£20", flavours:[]}
+        ]
+      }
+    ];
+
+    function setupContacts(){
+      const wa = document.getElementById("whatsappLink");
+      const sc = document.getElementById("snapchatLink");
+      const msg = encodeURIComponent(CONTACTS.whatsappMessage);
+      wa.href = `https://wa.me/${CONTACTS.whatsappNumber}?text=${msg}`;
+      sc.href = `https://www.snapchat.com/add/${CONTACTS.snapchatUsername}`;
+    }
+
+    function renderMenu(){
+      const accordion = document.getElementById("menuAccordion");
+      accordion.innerHTML = menuData.map((category,index)=>`
+        <article class="category" data-category="${index}">
+          <button class="category-btn" type="button" aria-expanded="false">
+            <span class="category-icon">${category.icon}</span>
+            <span class="category-title">${category.title}</span>
+            <span class="category-products">${category.headerImages.map(img=>`<img src="${img}" alt="" loading="lazy">`).join("")}</span>
+            <span class="plus">+</span>
+          </button>
+          <div class="category-content">
+            ${category.products.map((product,pIndex)=>`
+              <div class="product">
+                <div class="product-head">
+                  <span class="product-name">${product.name}</span>
+                  <span class="price">${product.price}</span>
+                </div>
+                ${product.flavours.length ? `
+                  <button class="flavour-toggle" type="button">View Flavours <span>⌄</span></button>
+                  <div class="flavours">
+                    <ul class="flavour-list">
+                      ${product.flavours.map(flavour=>{
+                        if(typeof flavour === "string") return `<li>${flavour}</li>`;
+                        return `<li class="${flavour.inStock === false ? "out" : ""}">${flavour.name}${flavour.inStock === false ? " — Out of stock" : ""}</li>`
+                      }).join("")}
+                    </ul>
+                  </div>
+                ` : ""}
+              </div>
+            `).join("")}
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function setupInteractions(){
+      document.querySelectorAll("[data-scroll-target]").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          document.querySelector(".hero").classList.add("browsing");
+          document.querySelector(btn.dataset.scrollTarget).scrollIntoView({behavior:"smooth", block:"start"});
+          if(navigator.vibrate) navigator.vibrate(12);
+        });
+      });
+
+      document.addEventListener("scroll",()=>{
+        document.body.classList.toggle("scrolled", window.scrollY > 40);
+      },{passive:true});
+
+      document.addEventListener("click",e=>{
+        const catBtn = e.target.closest(".category-btn");
+        if(catBtn){
+          const category = catBtn.closest(".category");
+          const content = category.querySelector(".category-content");
+          const isOpen = category.classList.contains("open");
+
+          document.querySelectorAll(".category.open").forEach(openCat=>{
+            if(openCat !== category){
+              openCat.classList.remove("open");
+              openCat.querySelector(".category-btn").setAttribute("aria-expanded","false");
+              openCat.querySelector(".category-content").style.maxHeight = null;
+            }
+          });
+
+          category.classList.toggle("open", !isOpen);
+          catBtn.setAttribute("aria-expanded", String(!isOpen));
+          content.style.maxHeight = !isOpen ? content.scrollHeight + "px" : null;
+        }
+
+        const flavourBtn = e.target.closest(".flavour-toggle");
+        if(flavourBtn){
+          const flavours = flavourBtn.nextElementSibling;
+          const isOpen = flavours.classList.contains("open");
+          flavours.classList.toggle("open", !isOpen);
+          flavours.style.maxHeight = !isOpen ? flavours.scrollHeight + "px" : null;
+          flavourBtn.querySelector("span").textContent = !isOpen ? "⌃" : "⌄";
+
+          const categoryContent = flavourBtn.closest(".category-content");
+          if(categoryContent.style.maxHeight){
+            setTimeout(()=>{ categoryContent.style.maxHeight = categoryContent.scrollHeight + "px"; }, 40);
+          }
+        }
+      });
+    }
+
+    setupContacts();
+    renderMenu();
+    setupInteractions();
+  </script>
+</body>
+</html>
